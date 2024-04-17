@@ -1,6 +1,27 @@
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
+import type { AppProps } from 'next/app';
+import '@/styles/globals.css';
+import Link from 'next/link';
+import { Logo } from '@/components/Logo';
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <nav className="top-nav">
+        <Link href="/">
+          <Logo />
+        </Link>
+        <ul className="nav-list">
+          <li>
+            <Link href="/posts">Posts</Link>
+          </li>
+          <li>
+            <Link href="/contact">Contact</Link>
+          </li>
+        </ul>
+      </nav>
+      <div className="container">
+        <Component {...pageProps} />
+      </div>
+    </>
+  );
 }
