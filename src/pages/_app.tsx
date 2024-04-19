@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import '@/styles/globals.css';
 import Link from 'next/link';
-import { Logo } from '@/components/Logo';
+import { Logo } from '@/components/logo';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
