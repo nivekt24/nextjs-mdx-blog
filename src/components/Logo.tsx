@@ -1,3 +1,3 @@
 export function Logo() {
-  return <div>Kevin&apos; Next Blog</div>;
+  return <div>Kevin&apos;s Blog</div>;
 }

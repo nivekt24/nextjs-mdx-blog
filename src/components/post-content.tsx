@@ -1,18 +1,39 @@
 import ReactMarkdown from 'react-markdown';
 import Image from 'next/image';
-
 import PostHeader from './post-header';
 import styles from './post-content.module.css';
 
-function PostContent({ post }) {
+interface Post {
+  slug: string;
+  image: string;
+  title: string;
+  content: string;
+}
+
+interface ImageNode {
+  type: string;
+  url: string;
+  alt: string;
+}
+
+interface ParagraphNode {
+  type: string;
+  children: string;
+}
+
+interface CustomComponents {
+  paragraph(paragraph: { node: ImageNode | ParagraphNode }): JSX.Element;
+}
+
+function PostContent({ post }: { post: Post }): JSX.Element {
   const imagePath = `/images/posts/${post.slug}/${post.image}`;
 
-  const customComponents = {
+  const customComponents: CustomComponents = {
     paragraph(paragraph) {
       const { node } = paragraph;
 
-      if (node.children[0].type === 'image') {
-        const image = node.children[0];
+      if (node.type === 'image') {
+        const image = node as ImageNode;
 
         return (
           <div className={styles.image}>
@@ -26,7 +47,7 @@ function PostContent({ post }) {
         );
       }
 
-      return <p>{paragraph.children}</p>;
+      return <p>{(node as ParagraphNode).children}</p>;
     },
   };
 

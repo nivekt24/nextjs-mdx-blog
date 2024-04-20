@@ -1,9 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
-
 import styles from './post-item.module.css';
+import { PostData } from '@/lib/posts-util';
 
-function PostItem({ post }) {
+interface PostItemProps {
+  post: PostData;
+}
+
+const PostItem: React.FC<PostItemProps> = ({ post }) => {
   const { title, image, excerpt, date, slug } = post;
 
   const formattedDate = new Date(date).toLocaleDateString('en-US', {
@@ -28,13 +32,13 @@ function PostItem({ post }) {
           />
         </div>
         <div className={styles.content}>
-          <h3>{title}</h3>
           <time>{formattedDate}</time>
+          <h3>{title}</h3>
           <p>{excerpt}</p>
         </div>
       </Link>
     </li>
   );
-}
+};
 
 export default PostItem;

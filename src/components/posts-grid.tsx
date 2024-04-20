@@ -1,7 +1,13 @@
+import React from 'react';
 import PostItem from './post-item';
 import styles from './posts-grid.module.css';
+import { PostData } from '@/lib/posts-util';
 
-export default function PostsGrid({ posts }) {
+interface PostsGridProps {
+  posts: PostData[];
+}
+
+const PostsGrid: React.FC<PostsGridProps> = ({ posts }) => {
   return (
     <ul className={styles.grid}>
       {posts.map((post) => (
@@ -9,4 +15,6 @@ export default function PostsGrid({ posts }) {
       ))}
     </ul>
   );
-}
+};
+
+export default PostsGrid;

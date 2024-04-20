@@ -1,8 +1,14 @@
 import PostContent from '@/components/post-content';
 import { getPostData, getPostsFiles } from '@/lib/posts-util';
 import Head from 'next/head';
+import { GetStaticProps, GetStaticPaths } from 'next';
+import { PostData } from '@/lib/posts-util';
 
-function PostDetailPage({ post }) {
+interface PostDetailPageProps {
+  post: PostData;
+}
+
+const PostDetailPage: React.FC<PostDetailPageProps> = ({ post }) => {
   return (
     <>
       <Head>
@@ -12,11 +18,19 @@ function PostDetailPage({ post }) {
       <PostContent post={post} />
     </>
   );
-}
+};
 
-export function getStaticProps(context) {
+export const getStaticProps: GetStaticProps<PostDetailPageProps> = async (
+  context
+) => {
   const { params } = context;
-  const { slug } = params;
+  const { slug } = params!;
+
+  if (!slug || Array.isArray(slug)) {
+    return {
+      notFound: true,
+    };
+  }
 
   const postData = getPostData(slug);
 
@@ -26,17 +40,19 @@ export function getStaticProps(context) {
     },
     revalidate: 600,
   };
-}
+};
 
-export function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const postFilenames = getPostsFiles();
 
   const slugs = postFilenames.map((fileName) => fileName.replace(/\.md$/, ''));
 
+  const paths = slugs.map((slug) => ({ params: { slug } }));
+
   return {
-    paths: slugs.map((slug) => ({ params: { slug: slug } })),
+    paths,
     fallback: false,
   };
-}
+};
 
 export default PostDetailPage;

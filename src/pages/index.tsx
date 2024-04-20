@@ -1,8 +1,13 @@
 import { Hero } from '@/components/hero';
 import FeaturedPosts from '@/components/featured-posts';
 import { getFeaturedPosts } from '../lib/posts-util';
+import { PostData } from '@/lib/posts-util';
 
-export default function Home({ posts }) {
+interface HomeProps {
+  posts: PostData[];
+}
+
+export default function Home({ posts }: HomeProps) {
   return (
     <>
       <Hero />
