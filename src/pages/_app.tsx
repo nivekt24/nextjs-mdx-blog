@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import '@/styles/globals.css';
 import Link from 'next/link';
 import { Logo } from '@/components/logo';
@@ -19,6 +20,9 @@ export default function App({ Component, pageProps }: AppProps) {
           </li>
         </ul>
       </nav>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       <div className="container">
         <Component {...pageProps} />
       </div>
